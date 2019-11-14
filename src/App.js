@@ -11,15 +11,20 @@ function App() {
   let [away, setAway] = useState(0);
   
   // Timer
-  let [time, setTime] = useState(0);
+  let [seconds, setSeconds] = useState(59);
+  let [min, setMin] = useState(14);
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setTime(time + 1);
+      setSeconds(seconds - 1);
+      if (seconds < 1) {
+        setSeconds(59);
+        setMin(min - 1);
+      }
     }, 1000);
     return () => {
       clearTimeout(timeout);
     }
-  }, [time]);
+  }, [seconds, min]);
 
   // Touchdowns
   const touchHome = point => {
@@ -54,7 +59,7 @@ let silver = 'silver';
 
             <div className="home__score" style={{color: white }}>{home}</div>
           </div>
-          <div className="timer" style={{color: red }}>{time}</div>
+          <div className="timer" style={{color: red }}>{min}:{seconds}</div>
           <div className="away" style={{backgroundColor: silver }}>
             <h2 className="away__name">Tigers</h2>
             <div className="away__score" style={{color: white }}>{away}</div>
@@ -62,7 +67,7 @@ let silver = 'silver';
         </div>
         <BottomRow />
       </section>
-      <section className="buttons">
+      <section className="buttons">   
         <div className="homeButtons">
           {/* TODO STEP 4 - Now we need to attach our state setter functions to click listeners. */}
           <button className="homeButtons__touchdown" onClick={touchHome}>Home Touchdown</button>
