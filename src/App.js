@@ -12,7 +12,6 @@ function App() {
   
   // Timer
   let [time, setTime] = useState(0);
-  let secondsPassed = useRef(0);
   useEffect(() => {
     const timeout = setTimeout(() => {
       setTime(time + 1);
